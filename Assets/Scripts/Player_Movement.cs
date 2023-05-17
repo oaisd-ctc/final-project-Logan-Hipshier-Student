@@ -11,10 +11,12 @@ public class Player_Movement : MonoBehaviour
     Vector2 moveInput;
     BoxCollider2D myCollider;
     int Jumps;
+    float JumpConst;
     void Start()
     {
         myrigidbody=GetComponent<Rigidbody2D>();
         myCollider=GetComponent<BoxCollider2D>();
+        JumpConst=JumpSpeed;
     }
 
     
@@ -32,8 +34,13 @@ public class Player_Movement : MonoBehaviour
     
     void OnJump(InputValue value){
         if(value.isPressed && Jumps<1){
-            myrigidbody.velocity+= new Vector2(myrigidbody.velocity.x+1, JumpSpeed);
+            if(!myCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+                JumpSpeed = JumpConst+ 0.5f;
+            }
+            myrigidbody.AddForce(Vector2.up*JumpSpeed,ForceMode2D.Impulse);
+            //myrigidbody.velocity+= new Vector2(12, JumpSpeed);
             Jumps++;
+            JumpSpeed=JumpConst;
            
         }
     }
