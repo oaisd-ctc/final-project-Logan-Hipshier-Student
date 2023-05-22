@@ -24,9 +24,11 @@ public class SegmentGenerator : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SpawnLevelPart(new Vector3(33, -8f) + new Vector3(unit, 0));
-        unit += increment;
-        Debug.Log("Touched Checkpoint");
+    
+            SpawnLevelPart(new Vector3(33, -8f) + new Vector3(unit, 0));
+            unit += increment;
+            Debug.Log("Touched Checkpoint");
+       
     }
 
    
