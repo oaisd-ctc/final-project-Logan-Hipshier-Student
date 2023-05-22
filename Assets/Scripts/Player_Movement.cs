@@ -12,8 +12,10 @@ public class Player_Movement : MonoBehaviour
     BoxCollider2D myCollider;
     int Jumps;
     float JumpConst;
+    Death death;
     void Start()
     {
+        death = GetComponent<Death>();
         myrigidbody=GetComponent<Rigidbody2D>();
         myCollider=GetComponent<BoxCollider2D>();
         JumpConst=JumpSpeed;
@@ -21,15 +23,17 @@ public class Player_Movement : MonoBehaviour
 
     
     void Update()
-    { 
-        if(myCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
-            Jumps = 0;
+    {   if (death.getAlive())
+        {
+            if (myCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+            {
+                Jumps = 0;
+            }
+
+            Vector2 Move = new Vector2(moveSpeed, myrigidbody.velocity.y);
+            myrigidbody.velocity = Move;
+
         }
-        
-        Vector2 Move= new Vector2(moveSpeed,myrigidbody.velocity.y);
-        myrigidbody.velocity= Move;
-
-
     }
     
     void OnJump(InputValue value){
